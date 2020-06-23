@@ -9,76 +9,33 @@ const {
 
 let wall;
 let ground;
-const boxes = [];
+const boxesA = [];
+const boxesB = [];
 let ball;
 let world, engine;
 let mConstraint;
 let slingshot;
-let goal;
-let ami1 = [];
-let ami2 = [];
+let goal = [];
 
 function setup() {
-  const canvas = createCanvas(680, 480);
+  const canvas = createCanvas(720, 720);
   engine = Engine.create();
   world = engine.world;
 
-  wall = new Ground(width-10, height / 2, 20, height);
+  sky = new Ground(width / 2, -100, width, 50);
+  wall = new Ground(width - 10, height / 2, 20, height * 2);
   ground = new Ground(width / 2, height - 10, width, 20);
 
-  for (let i = 0; i < 3; i++) {
-    boxes[i] = new Box(500 - i * 2, 300 - i * 100, 30, 80);
+  for (let i = 0; i < 10; i++) {
+    boxesA[i] = new Box(300, 500 - i * 200, 30, 80);
+    boxesB[i] = new Box(500, 500 - i * 200, 40, 80);
   }
 
-  ball = new Ball(200, 350, 8);
+  ball = new Ball(150, 550, 8);
 
-  slingshot = new SlingShot(150, 300, ball.body);
-  goal = new Goal(550, 200);
-
-  var prevBody = goal.body1;
-  var constraint;
-  var options;
-  for (let i = 0; i < 4; i++) {
-    ami1[i] = new Maru(550, 200 + (i * 10), 1);
-    options = {
-      bodyA: prevBody,
-      bodyB: ami1[i].body,
-      length: 10,
-      stiffness: 0.4
-    }
-
-    constraint = Matter.Constraint.create(options);
-    prevBody = ami1[i].body;
-    World.add(world, constraint);
-  }
-
-
-  prevBody = goal.body2;
-  for (let i = 0; i < 4; i++) {
-    ami2[i] = new Maru(600, 200 + (i * 10), 1);
-    options = {
-      bodyA: prevBody,
-      bodyB: ami2[i].body,
-      length: 10,
-      stiffness: 0.4
-    }
-
-    constraint = Matter.Constraint.create(options);
-    prevBody = ami2[i].body;
-    World.add(world, constraint);
-  }
-
-  options = {
-    bodyA: ami1[3].body,
-    bodyB: ami2[3].body,
-    length: 15,
-    stiffness: 0
-  }
-
-  constraint = Matter.Constraint.create(options);
-  World.add(world, constraint);
-
-
+  slingshot = new SlingShot(150, 550, ball.body);
+  goal[0] = new Goal(400, 500);
+  goal[1] = new Goal(640, 350);
 
 
   const mouse = Mouse.create(canvas.elt);
@@ -90,13 +47,35 @@ function setup() {
   mConstraint = MouseConstraint.create(engine, options);
   World.add(world, mConstraint);
 
+
+  setTimeout(() => {
+    checkReset();
+  }, 100);
 }
+
+
+function checkReset() {
+  if (!slingshot.isAttached()
+  &&  Math.abs(ball.body.velocity.x) < 0.05) {
+    reset();
+  }
+
+  setTimeout(() => {
+    checkReset();
+  }, 100);
+
+}
+
+function reset() {
+    World.remove(world, ball.body);
+    ball = new Ball(150, 550, 8);
+    slingshot.attach(ball.body);    
+}
+
 
 function keyPressed() {
   if (key == ' ') {
-    World.remove(world, ball.body);
-    ball = new Ball(150, 300, 8);
-    slingshot.attach(ball.body);
+    reset();
   } else if (key == 'a') {
     // ball.setVelocity();
     const velo = {
@@ -108,9 +87,20 @@ function keyPressed() {
 }
 
 function mouseReleased() {
-  setTimeout(() => {
-    slingshot.fly();
-  }, 100);
+  if (slingshot.isAttached()) {
+    setTimeout(() => {
+      slingshot.fly();
+    }, 100);
+
+  }
+}
+
+function renewBall() {
+  if (!slingshot.isAttached()) {
+    World.remove(world, ball.body);
+    ball = new Ball(150, 550, 8);
+    slingshot.attach(ball.body);
+  }
 }
 
 
@@ -120,18 +110,15 @@ function draw() {
   wall.show();
   ground.show();
 
-  for (let i = 0; i < 3; i++) {
-    boxes[i].show();
+  for (let i = 0; i < 10; i++) {
+    boxesA[i].show();
+    boxesB[i].show();
   }
 
-  ball.show();
   slingshot.show();
-  goal.show();
+  ball.show();
 
-  for (let i = 0; i < 4; i++) {
-    ami1[i].show();
-    ami2[i].show();
+  for (let i = 0; i < 2; i++) {
+    goal[i].show();
   }
-
-
 }

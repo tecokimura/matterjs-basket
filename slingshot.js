@@ -30,4 +30,10 @@ class SlingShot {
   attach(body) {
     this.sling.bodyB = body;
   }
+
+  isAttached() {
+    return (this.sling.bodyB != null);
+  }
+
 }
+

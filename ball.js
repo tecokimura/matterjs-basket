@@ -2,7 +2,10 @@ class Ball {
   constructor(x, y, r) {
     
     const options = {
-      restitution: 0.7
+      density: 0.008,
+      restitution: 0.8,
+      friction: 0.05,
+      frictionAir: 0.001
     };
     
     this.body = Matter.Bodies.circle(x, y, r, options);
@@ -17,7 +20,7 @@ class Ball {
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    fill(255);
+    fill(color(255,160,16));
     rectMode(CENTER);
     circle(0, 0, this.r*2);
     pop();
