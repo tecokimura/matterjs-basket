@@ -8,6 +8,7 @@ const {
 } = Matter;
 
 let wall;
+let wall2;
 let ground;
 const boxesA = [];
 const boxesB = [];
@@ -24,7 +25,8 @@ function setup() {
 
   sky = new Ground(width / 2, -100, width, 50);
   wall = new Ground(width - 10, height / 2, 20, height * 2);
-  ground = new Ground(width / 2, height - 10, width, 20);
+  wall2 = new Ground(-20, height / 2, 60, height * 2);
+  ground = new Ground(width / 2, height - 10, width*2, 20);
 
   for (let i = 0; i < 10; i++) {
     boxesA[i] = new Box(300, 500 - i * 200, 30, 80);
@@ -108,6 +110,7 @@ function draw() {
   background(0);
   Matter.Engine.update(engine);
   wall.show();
+  wall2.show();
   ground.show();
 
   for (let i = 0; i < 10; i++) {
@@ -122,3 +125,4 @@ function draw() {
     goal[i].show();
   }
 }
+
