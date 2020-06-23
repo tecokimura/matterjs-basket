@@ -4,6 +4,8 @@ class Box {
     Matter.World.add(world, this.body);
     this.w = w;
     this.h = h;
+    
+    this.color = 255;
   }
   
   show() {
@@ -12,7 +14,7 @@ class Box {
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    fill(255);
+    fill(this.color);
     rectMode(CENTER);
     rect(0, 0, this.w, this.h);
     pop();

@@ -1,6 +1,7 @@
 class Ground extends Box {
-  constructor(x,y,w,h) {
+  constructor(x, y, w, h) {
     super(x, y, w, h);
     this.body.isStatic = true;
+    this.color = color(128,128,128);
   }
 }
