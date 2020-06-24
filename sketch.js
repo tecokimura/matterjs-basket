@@ -24,8 +24,8 @@ function setup() {
   world = engine.world;
 
   sky = new Ground(width / 2, -100, width, 50);
-  wall = new Ground(width - 10, height / 2, 20, height * 2);
-  wall2 = new Ground(-20, height / 2, 60, height * 2);
+  wall = new Ground(width, 0, 40, height * 2);
+  wall2 = new Ground(0, 0, 40, height * 2);
   ground = new Ground(width / 2, height - 10, width*2, 20);
 
   for (let i = 0; i < 10; i++) {
@@ -33,7 +33,7 @@ function setup() {
     boxesB[i] = new Box(500, 500 - i * 200, 40, 80);
   }
 
-  ball = new Ball(150, 550, 8);
+  ball = new Ball(150, 550, 32);
 
   slingshot = new SlingShot(150, 550, ball.body);
   goal[0] = new Goal(400, 500);
@@ -57,8 +57,11 @@ function setup() {
 
 
 function checkReset() {
+  
+  var absBallVelo = Math.abs(ball.body.velocity.x)+Math.abs(ball.body.velocity.y);
+  
   if (!slingshot.isAttached()
-  &&  Math.abs(ball.body.velocity.x) < 0.05) {
+  &&  absBallVelo * 4 < 0.05) {
     reset();
   }
 
@@ -70,7 +73,7 @@ function checkReset() {
 
 function reset() {
     World.remove(world, ball.body);
-    ball = new Ball(150, 550, 8);
+    ball = new Ball(150, 550, 32);
     slingshot.attach(ball.body);    
 }
 
@@ -90,6 +93,7 @@ function keyPressed() {
 
 function mouseReleased() {
   if (slingshot.isAttached()) {
+    Matter.Body.scale(ball.body, 0.25, 0.25);
     setTimeout(() => {
       slingshot.fly();
     }, 100);
@@ -100,7 +104,7 @@ function mouseReleased() {
 function renewBall() {
   if (!slingshot.isAttached()) {
     World.remove(world, ball.body);
-    ball = new Ball(150, 550, 8);
+    ball = new Ball(150, 550, 32);
     slingshot.attach(ball.body);
   }
 }
