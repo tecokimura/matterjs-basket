@@ -2,7 +2,7 @@ class Ball {
   constructor(x, y, r) {
 
     const options = {
-      density: 0.008,
+      density: 0.01,
       restitution: 0.8,
       friction: 0.05,
       frictionAir: 0.001

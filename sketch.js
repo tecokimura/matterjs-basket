@@ -96,7 +96,7 @@ function mouseReleased() {
     Matter.Body.scale(ball.body, 0.25, 0.25);
     setTimeout(() => {
       slingshot.fly();
-    }, 100);
+    }, 10);
 
   }
 }
@@ -129,4 +129,3 @@ function draw() {
     goal[i].show();
   }
 }
-

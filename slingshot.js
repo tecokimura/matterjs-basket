@@ -6,7 +6,7 @@ class SlingShot {
         y: y
       },
       bodyB: body,
-      stiffness: 0.02,
+      stiffness: 0.1,
       length: 30
     }
 
