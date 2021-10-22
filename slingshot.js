@@ -7,7 +7,7 @@ class SlingShot {
       },
       bodyB: body,
       stiffness: 0.1,
-      length: 30
+      length: 40
     }
 
     this.sling = Constraint.create(options);
@@ -28,11 +28,29 @@ class SlingShot {
   }
 
   attach(body) {
+    this.sling.length = 40;
+    this.sling.stiffness = 0.1;
     this.sling.bodyB = body;
   }
 
   isAttached() {
     return (this.sling.bodyB != null);
+  }
+
+  /**
+   * slingの長さをチェックする
+   */
+  checkLength() {
+    if (this.sling.bodyB) {
+      let distLength = dist(this.sling.pointA.x, this.sling.pointA.y, this.sling.bodyB.position.x, this.sling.bodyB.position.y);
+      if (distLength > 100) {
+ //       this.sling.stiffness = 1;
+ //       this.sling.length = 100;
+      } else {
+ //       this.sling.stiffness = 0.1;
+ //       this.sling.length = distLength;
+      }
+    }
   }
 
 }

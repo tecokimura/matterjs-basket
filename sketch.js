@@ -67,6 +67,8 @@ function checkReset() {
     reset();
   }
 
+  slingshot.checkLength();
+
   setTimeout(() => {
     checkReset();
   }, 100);
@@ -76,10 +78,15 @@ function checkReset() {
 function reset() {
     World.remove(world, ball.body);
     ball = new Ball(150, 1250, 32);
-    slingshot.attach(ball.body);    
+    slingshot.attach(ball.body); 
 }
 
 
+/**
+ * デバッグ機能的なもの
+ * Space ボタンでリセット
+ * a ボタンで仮発射テスト
+ */
 function keyPressed() {
   if (key == ' ') {
     reset();
