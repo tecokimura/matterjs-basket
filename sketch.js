@@ -67,8 +67,6 @@ function checkReset() {
     reset();
   }
 
-  slingshot.checkLength();
-
   setTimeout(() => {
     checkReset();
   }, 100);
@@ -96,7 +94,7 @@ function keyPressed() {
       x: 10,
       y: -10,
     };
-    Matter.Body.setVelocity(ballj.body, velo);
+    Matter.Body.setVelocity(ball.body, velo);
   }
 }
 
@@ -104,7 +102,7 @@ function mouseReleased() {
   if (slingshot.isAttached()) {
     Matter.Body.scale(ball.body, 0.25, 0.25);
     setTimeout(() => {
-      slingshot.fly();
+      slingshot.shoot();
     }, 50);
 
   }
