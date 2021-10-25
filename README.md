@@ -4,19 +4,25 @@ Basket game with Matter.js
 ## Matter.js を使ってゲームサンプル
 https://tecokimura.github.io/matterjs-basket/
 
-## Matter.js
+## 使用しているライブラリ
+- p5.js
+https://p5js.org/
+
+- Matter.js
 https://brm.io/matter-js/docs/index.html
 物理演算ライブラリ
 
-## Coding Challenge で Angly Birds
+
+## 参考にした動画
+- Coding Challenge で Angly Birds
 https://www.youtube.com/watch?v=TDQzoe9nslY&t=1192s
 こちらを参考にp5でプログラミングしてみる。
 
-## Constraints
+- Constraints
 https://www.youtube.com/watch?v=szztTszPp-8
 ゴールのカゴ部分を参考にした
 
-# Memo
+## memo
 テストで書いた延長なのでゴリゴリだけどとりあえずGitHubに更新
 
 
