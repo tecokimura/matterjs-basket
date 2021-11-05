@@ -17,6 +17,7 @@ let world, engine;
 let mConstraint;
 let slingshot;
 let goal = [];
+let cloth;
 
 function setup() {
   const canvas = createCanvas(720, 1440);
@@ -41,6 +42,7 @@ function setup() {
   goal[2] = new Goal(240, 1250);
   goal[3] = new Goal(540, 1150);
 
+  cloth = new Cloth(240, 1000, 20, 12, 5, 5, false, 8);
 
   const mouse = Mouse.create(canvas.elt);
   options = {
@@ -123,6 +125,7 @@ function draw() {
   wall.show();
   wall2.show();
   ground.show();
+  cloth.show();
 
   for (let i = 0; i < 10; i++) {
     boxesA[i].show();
