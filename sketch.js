@@ -42,7 +42,7 @@ function setup() {
   goal[2] = new Goal(240, 1250);
   goal[3] = new Goal(540, 1150);
 
-  cloth = new Cloth(240, 1000, 4, 3, 5, 5, false, 8);
+  cloth = new Cloth(200, 1000, 5, 5, 4, 6, false, 3);
 
   const mouse = Mouse.create(canvas.elt);
   options = {
