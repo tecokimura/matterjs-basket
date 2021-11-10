@@ -20,29 +20,29 @@ let goal = [];
 let cloth;
 
 function setup() {
-  const canvas = createCanvas(720, 1440);
+  const canvas = createCanvas(720, 720);
   engine = Engine.create();
   world = engine.world;
 
-  sky = new Ground(width / 2, -100, width, 50);
+  sky = new Ground(width / 2, -100, width, 50); // 天井に少し余裕をもたせている
   wall = new Ground(width, 0, 40, height * 2);
   wall2 = new Ground(0, 0, 40, height * 2);
   ground = new Ground(width / 2, height - 10, width*2, 20);
 
-  for (let i = 0; i < 10; i++) {
-    boxesA[i] = new Box(300, 500 - i * 200, 30, 80);
-    boxesB[i] = new Box(500, 500 - i * 200, 40, 80);
+  for (let i = 0; i < 3; i++) {
+    boxesA[i] = new Box(300, 250 - i * 100, 30, 80);
+    boxesB[i] = new Box(500, 250 - i * 100, 40, 80);
   }
 
-  ball = new Ball(150, 1250, 32);
+  ball = new Ball(150, 500, 32);
 
-  slingshot = new SlingShot(150, 1250, ball.body);
-  goal[0] = new Goal(400, 1000);
-  goal[1] = new Goal(640,  750);
-  goal[2] = new Goal(240, 1250);
-  goal[3] = new Goal(540, 1150);
+  slingshot = new SlingShot(150, 500, ball.body);
+  goal[0] = new Goal(400, 400);
+  goal[1] = new Goal(640, 275);
+  goal[2] = new Goal(240, 525);
+  goal[3] = new Goal(540, 475);
 
-  cloth = new Cloth(200, 1000, 5, 5, 4, 6, false, 3);
+  cloth = new Cloth(400, 200, 5, 5, 4, 6, false, 3);
 
   const mouse = Mouse.create(canvas.elt);
   options = {
@@ -77,7 +77,7 @@ function checkReset() {
 
 function reset() {
     World.remove(world, ball.body);
-    ball = new Ball(150, 1250, 32);
+    ball = new Ball(150, 500, 32);
     slingshot.attach(ball.body); 
 }
 
@@ -113,7 +113,7 @@ function mouseReleased() {
 function renewBall() {
   if (!slingshot.isAttached()) {
     World.remove(world, ball.body);
-    ball = new Ball(150, 1250, 32);
+    ball = new Ball(150, 500, 32);
     slingshot.attach(ball.body);
   }
 }
@@ -127,7 +127,7 @@ function draw() {
   ground.show();
   cloth.show();
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < boxesA.length; i++) {
     boxesA[i].show();
     boxesB[i].show();
   }
