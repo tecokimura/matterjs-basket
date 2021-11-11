@@ -1,6 +1,5 @@
 const {
-  Engine,
-  World,
+  Engine, World,
   Bodies,
   Mouse,
   MouseConstraint,
@@ -51,14 +50,14 @@ function setup() {
   slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
   slingshot = new SlingShot(150, 500, slingball.body);
 
-  goal[0] = new Goal(400, 400);
-  goal[1] = new Goal(640, 275);
-  goal[2] = new Goal(240, 525);
-  goal[3] = new Goal(540, 475);
+  goal[0] = new Goal(240, 525);
+  goal[1] = new Goal(400, 400);
+  goal[2] = new Goal(540, 550);
+  goal[3] = new Goal(640, 450);
 
   cloth = new Cloth(400, 200, 5, 5, 4, 6, false, 3);
 
-  shotball = new Shotball(100,100,INIT_SLINGBALL_POX_R, imgShotball);
+  shotball = new Shotball(100,50,INIT_SLINGBALL_POX_R, imgShotball);
 
   const mouse = Mouse.create(canvas.elt);
   options = {
@@ -92,27 +91,29 @@ function checkReset() {
 }
 
 function reset() {
-    World.remove(world, slingball.body);
-    slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
-    slingshot.attach(slingball.body); 
+    //World.remove(world, slingball.body);
+    //slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
+    //slingshot.attach(slingball.body); 
+
 }
 
 
 /**
  * デバッグ機能的なもの
  * Space ボタンでリセット
- * a ボタンで仮発射テスト
+ * a,s,d ボタンで仮発射テスト
  */
 function keyPressed() {
-  if (key == ' ') {
+  if (key == 'q') {
     reset();
-  } else if (key == 'a') {
-    // ball.setVelocity();
-    const velo = {
-      x: 10,
-      y: -10,
-    };
-    Matter.Body.setVelocity(slingball.body, velo);
+    shotball.reset();
+
+  } else if( key == "a" || key == "s" || key == "d") {
+    let n = 1;
+    if( key == "s" ) n = 1.2;
+    if( key == "d" ) n = 1.5;
+
+    Matter.Body.setVelocity(shotball.body, { x: 4*n, y: -8*n });
   }
 }
 

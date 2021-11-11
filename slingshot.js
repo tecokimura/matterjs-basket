@@ -1,7 +1,7 @@
 
-const SLINGSHOT_BASE_STIFFNESS = 0.1;
-const SLINGSHOT_BASE_LENGTH = 40;
-const SLINGSHOT_MAX_VELOCITY = 20;
+const SLINGSHOT_BASE_STIFFNESS= 0.1;
+const SLINGSHOT_BASE_LENGTH   = 40;
+const SLINGSHOT_MAX_VELOCITY  = 20;
 
 class SlingShot {
 
@@ -27,7 +27,7 @@ class SlingShot {
   shoot() {
 
     // 速度が上限言ってたら上書きする
-    print("sp="+this.sling.bodyB.speed+",vx="+this.sling.bodyB.velocity.x+",vy="+this.sling.bodyB.velocity.y);
+//    print("sp="+this.sling.bodyB.speed+",vx="+this.sling.bodyB.velocity.x+",vy="+this.sling.bodyB.velocity.y);
     this.updateShotMaxVelocity(this.sling.bodyB, SLINGSHOT_MAX_VELOCITY);
 
     this.sling.bodyB = null;

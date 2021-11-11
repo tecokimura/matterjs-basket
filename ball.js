@@ -9,7 +9,7 @@ class Ball {
     };
 
     this.body = Matter.Bodies.circle(x, y, r/2, options);
-    Matter.Body.setMass(this.body, 100);
+    Matter.Body.setMass(this.body, 80);
     Matter.World.add(world, this.body);
     this.r = r;
 
