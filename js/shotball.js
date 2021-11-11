@@ -1,10 +1,11 @@
-class Ball {
-  constructor(x, y, r) {
+class Shotball {
+
+  constructor(x, y, r, image) {
 
     const options = {
       density: 0.01,
       restitution: 0.8,
-      friction: 0.05,
+      friction: 0.1,
       frictionAir: 0.001
     };
 
@@ -13,15 +14,18 @@ class Ball {
     Matter.World.add(world, this.body);
     this.r = r;
 
+    this.image = image;
   }
 
+  // ボールの描画
   show() {
     const pos = this.body.position;
     const angle = this.body.angle;
-
-    fill(color(255, 160, 16));
-    rectMode(CENTER);
-    circle(pos.x, pos.y, this.r);
+    
+    push();
+    imageMode(CENTER);
+    image(this.image, pos.x, pos.y, this.r, this.r);
+    pop();
   }
 
 }

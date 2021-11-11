@@ -12,12 +12,26 @@ let wall2;
 let ground;
 const boxesA = [];
 const boxesB = [];
-let ball;
+let slingball;
 let world, engine;
 let mConstraint;
 let slingshot;
 let goal = [];
 let cloth;
+
+let shotball;
+
+const INIT_SLINGBALL_POX_X = 150;
+const INIT_SLINGBALL_POX_Y = 500;
+const INIT_SLINGBALL_POX_R = 24;
+
+let imgShotball;
+
+function preload() {
+  console.log("start preload");
+  imgShotball = loadImage("./img/basketball.png");
+  console.log("end preload");
+}
 
 function setup() {
   const canvas = createCanvas(720, 720);
@@ -34,15 +48,17 @@ function setup() {
     boxesB[i] = new Box(500, 250 - i * 100, 40, 80);
   }
 
-  ball = new Ball(150, 500, 32);
+  slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
+  slingshot = new SlingShot(150, 500, slingball.body);
 
-  slingshot = new SlingShot(150, 500, ball.body);
   goal[0] = new Goal(400, 400);
   goal[1] = new Goal(640, 275);
   goal[2] = new Goal(240, 525);
   goal[3] = new Goal(540, 475);
 
   cloth = new Cloth(400, 200, 5, 5, 4, 6, false, 3);
+
+  shotball = new Shotball(100,100,INIT_SLINGBALL_POX_R, imgShotball);
 
   const mouse = Mouse.create(canvas.elt);
   options = {
@@ -62,7 +78,7 @@ function setup() {
 
 function checkReset() {
   
-  var absBallVelo = Math.abs(ball.body.velocity.x)+Math.abs(ball.body.velocity.y);
+  var absBallVelo = Math.abs(slingball.body.velocity.x)+Math.abs(slingball.body.velocity.y);
   
   if (!slingshot.isAttached()
   &&  absBallVelo * 2 < 0.05) {
@@ -76,9 +92,9 @@ function checkReset() {
 }
 
 function reset() {
-    World.remove(world, ball.body);
-    ball = new Ball(150, 500, 32);
-    slingshot.attach(ball.body); 
+    World.remove(world, slingball.body);
+    slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
+    slingshot.attach(slingball.body); 
 }
 
 
@@ -96,13 +112,13 @@ function keyPressed() {
       x: 10,
       y: -10,
     };
-    Matter.Body.setVelocity(ball.body, velo);
+    Matter.Body.setVelocity(slingball.body, velo);
   }
 }
 
 function mouseReleased() {
   if (slingshot.isAttached()) {
-    Matter.Body.scale(ball.body, 0.25, 0.25);
+//    Matter.Body.scale(slingball.body, 0.25, 0.25);
     setTimeout(() => {
       slingshot.shoot();
     }, 50);
@@ -112,9 +128,9 @@ function mouseReleased() {
 
 function renewBall() {
   if (!slingshot.isAttached()) {
-    World.remove(world, ball.body);
-    ball = new Ball(150, 500, 32);
-    slingshot.attach(ball.body);
+    World.remove(world, slingball.body);
+    slingball = new Ball(INIT_SLINGBALL_POX_X, INIT_SLINGBALL_POX_Y, INIT_SLINGBALL_POX_R);
+    slingshot.attach(slingball.body);
   }
 }
 
@@ -133,7 +149,9 @@ function draw() {
   }
 
   slingshot.show();
-  ball.show();
+  slingball.show();
+
+  shotball.show();
 
   for (let i = 0; i < 4; i++) {
     goal[i].show();
