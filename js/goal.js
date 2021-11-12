@@ -2,7 +2,7 @@ class Goal {
   
   constructor(x, y) {
     var options = {
-      restitution: 0.5
+      restitution: 1.0
     };
 
     this.ringL = 0;
@@ -10,12 +10,13 @@ class Goal {
     this.bar   = 0;
     this.board = 0;
 
+    // あみを表現するドット
     this.amiL = [];
     this.amiR = [];
 
-    const RING_R   = 3;
-    const RING_MESS= 100;
-    const ADD_RING_R   = 28;
+    const RING_R   = 3; // リングの両端、淵の円の半径
+    const RING_MESS= 70; // リングの重さ？(setMess)
+    this.WIDTH_RING   = 30; // リングのサイズ
     const ADD_BAR_Y    = 36;
     const ADD_BOARD_Y  = 40;
 
@@ -28,25 +29,16 @@ class Goal {
     Matter.World.add(world, this.ringL);
 
     // right ring
-    this.ringR = Matter.Bodies.circle(x + ADD_RING_R, y, this.r, options);
+    this.ringR = Matter.Bodies.circle(x + this.WIDTH_RING, y, this.r, options);
     Matter.Body.setMass(this.ringR, RING_MESS);
     this.ringR.isStatic = true;
     Matter.World.add(world, this.ringR);
-
-    // ring bar
-    options = {
-      restitution: 0.8,
-    };
 
     this.body3 = Matter.Bodies.rectangle(x + ADD_BAR_Y, y, 2, 2, options);
     Matter.Body.setMass(this.body3, RING_MESS);
     this.body3.isStatic = true;
     Matter.World.add(world, this.body3);
 
-    // ring back
-    options = {
-      restitution: 0.3,
-    };
     this.body4 = Matter.Bodies.rectangle(x + ADD_BOARD_Y, y - 15, 5, 50, options);
     Matter.Body.setMass(this.body4, RING_MESS);
     this.body4.isStatic = true;
@@ -72,7 +64,7 @@ class Goal {
 
     prevBody = this.ringR;
     for (let i = 0; i < 6; i++) {
-      this.amiR[i] = new Maru(x, y + ADD_RING_R + (i * 8), 1);
+      this.amiR[i] = new Maru(x, y + this.WIDTH_RING + (i * 8), 1);
       options = {
         bodyA: prevBody,
         bodyB: this.amiR[i].body,
@@ -132,7 +124,7 @@ class Goal {
     push();
     fill(color(255, 0, 0));
     rectMode(CENTER);
-    rect(this.ringL.position.x+15, this.ringL.position.y, 28, 6);
+    rect(this.ringL.position.x+(this.WIDTH_RING/2), this.ringL.position.y, this.WIDTH_RING, this.r*2);
     pop();
 
     pos = this.ringL.position;

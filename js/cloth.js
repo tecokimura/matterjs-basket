@@ -14,7 +14,7 @@ class Cloth {
         this.numPoint = columns * rows;
 
         var group = Matter.Body.nextGroup(true);    
-        var particleOptions = Matter.Common.extend({ inertia: Infinity, friction: 0.00001, collisionFilter: { group: group }, render: { visible: false }}, particleOptions);
+        var particleOptions = Matter.Common.extend({ inertia: Infinity, friction: 0.8, collisionFilter: { group: group }, render: { visible: false }}, particleOptions);
         var constraintOptions = Matter.Common.extend({ stiffness: 0.06, render: { type: 'line', anchors: false } }, constraintOptions);
     
         this.cloth = Matter.Composites.stack(xx, yy, columns, rows, columnGap, rowGap, function(x, y, col, row) {
