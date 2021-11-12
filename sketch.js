@@ -16,6 +16,7 @@ let world, engine;
 let mConstraint;
 let slingshot;
 let goal = [];
+let goalCloth = [];
 let cloth;
 
 let shotball;
@@ -58,7 +59,9 @@ function setup() {
   goal[2] = new Goal(560, 450);
   goal[3] = new Goal(640, 350);
 
-  cloth = new Cloth(400, 50, 6, 12, 4, 6, false, 3);
+  goalCloth[0] = new GoalCloth(400,200);
+
+  cloth = new Cloth(200, 100, 6, 12, 4, 6, false, 3);
 
   shotball = new Shotball(INIT_SHOTBALL_POX_X, INIT_SHOTBALL_POX_Y, INIT_SHOTBALL_POX_R, imgShotball);
 
@@ -149,7 +152,7 @@ function draw() {
 
   shotball.show();
 
-  for (let i = 0; i < 4; i++) {
-    goal[i].show();
-  }
+  for (let i = 0; i < goal.length; i++) goal[i].show();
+  for (let i = 0; i < goalCloth.length; i++) goalCloth[i].show();
+  
 }
