@@ -10,10 +10,14 @@ class SlingShot {
 
   constructor(slingX, slingY, ballR) {
 
+    // 初期化用に保存しておく
     this.initX = slingX;
     this.initY = slingY;
+
+    // Slingで投げるボールを生成
     this.ball = new Ball(slingX, slingY, ballR);
 
+    // Sling option
     const options = {
       pointA: {
         x: slingX,
@@ -34,18 +38,10 @@ class SlingShot {
    * slingshotとの紐付けを外す
    */
   shoot() {
-    // 速度が上限言ってたら上書きする
+    // 速度が上限を超えていたら制限する
     this.updateShotMaxVelocity(this.sling.bodyB, SLINGSHOT_MAX_VELOCITY);
     this.sling.bodyB = null;
   }
-
-  // ボールをセットし直す
-  reset() {
-
-    this.attach(); 
-
-  }
-
 
   /**
    * 放たれた時の最大速度を制限する（目に見えなくなるので）
@@ -65,6 +61,8 @@ class SlingShot {
 
   }
 
+
+  // 画面描画
   show() {
     if (this.sling.bodyB) {
       stroke(255);
@@ -77,6 +75,8 @@ class SlingShot {
     this.ball.show();
   }
 
+  // ボールをセットし直す
+  reset() { this.attach(); }
   attach() {
     Matter.Body.setPosition(this.ball.body, { x: this.initX, y: this.initY})
     Matter.Body.setVelocity(this.ball.body, { x: 0, y: 0})
@@ -86,6 +86,7 @@ class SlingShot {
     this.sling.bodyB = this.ball.body;
   }
 
+  // ボールがまだくっついているかを調べる
   isAttached() {
     return (this.sling.bodyB != null);
   }
