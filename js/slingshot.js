@@ -1,22 +1,31 @@
-
+/**
+ * What's Slingshot
+ * パチンコみたいな紐、ゴムを引っ張ってボールを投げる
+ */
 const SLINGSHOT_BASE_STIFFNESS= 0.1;
 const SLINGSHOT_BASE_LENGTH   = 40;
 const SLINGSHOT_MAX_VELOCITY  = 20;
 
 class SlingShot {
 
-  constructor(x, y, body) {
+  constructor(slingX, slingY, ballR) {
+
+    this.initX = slingX;
+    this.initY = slingY;
+    this.ball = new Ball(slingX, slingY, ballR);
+
     const options = {
       pointA: {
-        x: x,
-        y: y
+        x: slingX,
+        y: slingY
       },
-      bodyB: body,
+      bodyB: this.ball.body,
       stiffness: SLINGSHOT_BASE_STIFFNESS,
       length: SLINGSHOT_BASE_LENGTH
     }
 
     this.sling = Constraint.create(options);
+
     World.add(world, this.sling);
   }
 
@@ -25,12 +34,16 @@ class SlingShot {
    * slingshotとの紐付けを外す
    */
   shoot() {
-
     // 速度が上限言ってたら上書きする
-//    print("sp="+this.sling.bodyB.speed+",vx="+this.sling.bodyB.velocity.x+",vy="+this.sling.bodyB.velocity.y);
     this.updateShotMaxVelocity(this.sling.bodyB, SLINGSHOT_MAX_VELOCITY);
-
     this.sling.bodyB = null;
+  }
+
+  // ボールをセットし直す
+  reset() {
+
+    this.attach(); 
+
   }
 
 
@@ -59,12 +72,18 @@ class SlingShot {
       const posB = this.sling.bodyB.position;
       line(posA.x, posA.y, posB.x, posB.y);
     }
+
+    
+    this.ball.show();
   }
 
-  attach(body) {
+  attach() {
+    Matter.Body.setPosition(this.ball.body, { x: this.initX, y: this.initY})
+    Matter.Body.setVelocity(this.ball.body, { x: 0, y: 0})
+
     this.sling.stiffness = SLINGSHOT_BASE_STIFFNESS;
     this.sling.length = SLINGSHOT_BASE_LENGTH;
-    this.sling.bodyB = body;
+    this.sling.bodyB = this.ball.body;
   }
 
   isAttached() {
