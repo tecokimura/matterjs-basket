@@ -1,5 +1,6 @@
 # matterjs-basket
-Basket game with Matter.js
+Basket game with p5.js and Matter.js
+ボタンを押してゴールを狙う;
 
 ## Let's play the Game
 https://tecokimura.github.io/matterjs-basket/
@@ -22,7 +23,7 @@ https://www.youtube.com/watch?v=TDQzoe9nslY&t=1192s
 https://www.youtube.com/watch?v=szztTszPp-8  
 ゴールのカゴ部分を参考にした  
 
-## memo
+## Memo
 テストで書いた延長なのでゴリゴリだけどとりあえずGitHubに更新
 
 
