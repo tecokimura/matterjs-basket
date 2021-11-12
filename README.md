@@ -1,7 +1,7 @@
 # matterjs-basket
 Basket game with Matter.js
 
-## Matter.js を使ってゲームサンプル
+## Let's play the Game
 https://tecokimura.github.io/matterjs-basket/
 
 ## 使用しているライブラリ
